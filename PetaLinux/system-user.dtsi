@@ -1,0 +1,94 @@
+/include/ "system-conf.dtsi"
+/ {
+
+	leds {
+		compatible = "gpio-leds";
+
+		ds23 {
+			label = "ds23";
+			gpios = <&gpio0 10 0>;
+			linux,default-trigger = "heartbeat";
+		};
+	};
+
+	usb_phy0: usb_phy@0 {
+		compatible = "ulpi-phy";
+		#phy-cells = <0>;
+		reg = <0xe0002000 0x1000>;
+		view-port = <0x0170>;
+		drv-vbus;
+	};
+
+};
+
+&spi0 {
+    device@0 {
+        compatible = "spidev";
+        reg = <0>;
+        spi-max-frequency = <100000000>;
+    };
+    device@1 {
+        compatible = "spidev";
+        reg = <1>;
+        spi-max-frequency = <100000000>;
+    };
+    device@2 {
+        compatible = "spidev";
+        reg = <2>;
+        spi-max-frequency = <100000000>;
+    };
+};
+
+&spi1 {
+    device@0 {
+        compatible = "spidev";
+        reg = <0>;
+        spi-max-frequency = <100000000>;
+    };
+    device@1 {
+        compatible = "spidev";
+        reg = <1>;
+        spi-max-frequency = <100000000>;
+    };
+    device@2 {
+        compatible = "spidev";
+        reg = <2>;
+        spi-max-frequency = <100000000>;
+    };
+};
+
+&usb0 {
+	dr_mode = "host";
+	usb-phy = <&usb_phy0>;
+};
+
+&i2c1 {
+	clock-frequency = <400000>;
+};
+
+&gpio0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gpio0_default>;
+};
+
+&pinctrl0 {
+	pinctrl_gpio0_default: gpio0-default {
+		mux {
+			function = "gpio0";
+			groups = "gpio0_1_grp", "gpio0_2_grp", "gpio0_3_grp", "gpio0_4_grp", "gpio0_5_grp", "gpio0_6_grp", "gpio0_7_grp", "gpio0_8_grp", "gpio0_10_grp";
+		};
+
+		conf {
+			groups = "gpio0_1_grp", "gpio0_2_grp", "gpio0_3_grp", "gpio0_4_grp", "gpio0_5_grp", "gpio0_6_grp", "gpio0_7_grp", "gpio0_8_grp", "gpio0_10_grp";
+			slew-rate = <0>;
+			io-standard = <1>;
+		};
+
+		conf-pull-up {
+			pins = "MIO10";
+			bias-pull-up;
+		};
+	};
+};
+
+
